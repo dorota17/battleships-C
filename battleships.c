@@ -25,7 +25,7 @@ void displayOne(int board[10][10])
                 printf("\033[0;31m- ");
             else if(board[i][j] == 1)//statek
                 printf("\033[0;32m# ");
-            else if(board[i][j] == -2)//otoczenie wokół statku, w którym nie można stawiać innych statków
+            else if(board[i][j] == -2)//otoczenie wokó³ statku, w którym nie mo¿na stawiaæ innych statków
                 printf("\033[0;31m- ");
             else if(board[i][j] == 0)//woda
                 printf("\033[0;34m. ");
@@ -110,6 +110,12 @@ void displayTwo(int board1[10][10], int board2[10][10])
     }
 }
 
+void clearTwoLines()
+{
+    printf("\33[2K\r");
+    printf("\33[2K\r");
+}
+
 void placeShip(int board[10][10], int n, int orientation, int x, int y, int number)
 {
     for(int i=0;i<n;i++)
@@ -185,7 +191,7 @@ void trojmasztowiec(int board[10][10])
     scanf("%d", &orientation);
     while(orientation != 0 && orientation != 1)
     {
-
+        clearTwoLines();
         printf("Bledne dane (pionowo-0, poziomo-1):\n");
         scanf("%d", &orientation);
     }
@@ -205,7 +211,7 @@ void trojmasztowiec(int board[10][10])
         }
         while(y<=0 || y>10 || x<=0 || x>8 || collision==1)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
             collision = 0;
@@ -232,7 +238,7 @@ void trojmasztowiec(int board[10][10])
         }
         while(x<=0 || x>10 || y<=0 || y>8 || collision==1)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
             collision = 0;
@@ -260,7 +266,7 @@ void dwumasztowiec(int board[10][10])
     scanf("%d", &orientation);
     while(orientation != 0 && orientation != 1)
     {
-
+        clearTwoLines();
         printf("Bledne dane (pionowo-0, poziomo-1):\n");
         scanf("%d", &orientation);
     }
@@ -280,7 +286,7 @@ void dwumasztowiec(int board[10][10])
         }
         while(y<=0 || y>10 || x<=0 || x>9 || collision==1)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
             collision = 0;
@@ -307,7 +313,7 @@ void dwumasztowiec(int board[10][10])
         }
         while(x<=0 || x>10 || y<=0 || y>9 || collision==1)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
             collision = 0;
@@ -335,7 +341,7 @@ void jednomasztowiec(int board[10][10])
     scanf("%d %d", &x, &y);
     while(y<=0 || y>10 || x<=0 || x>10 || board[y-1][x-1] == 1 || board[y-1][x-1] == -2)
     {
-
+        clearTwoLines();
         printf("Bledne dane, podaj jeszcze raz:\n");
         scanf("%d %d", &x, &y);
     }
@@ -344,7 +350,6 @@ void jednomasztowiec(int board[10][10])
     system("cls");
     displayOne(board);
 }
-
 void userPlaceShips(int board[10][10])
 {
     displaystart(board);
@@ -355,7 +360,7 @@ void userPlaceShips(int board[10][10])
     scanf("%d", &orientation);
     while(orientation != 0 && orientation != 1)
     {
-
+        clearTwoLines();
         printf("Bledne dane (pionowo-0, poziomo-1):\n");
         scanf("%d", &orientation);
     }
@@ -366,7 +371,7 @@ void userPlaceShips(int board[10][10])
     {
         while(y<=0 || y>10 || x<=0 || x>7)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
         }
@@ -375,7 +380,7 @@ void userPlaceShips(int board[10][10])
     {
         while(x<=0 || x>10 || y<=0 || y>7)
         {
-
+            clearTwoLines();
             printf("Bledne dane, podaj jeszcze raz:\n");
             scanf("%d %d", &x, &y);
         }
@@ -553,6 +558,7 @@ void AIjednomasztowiec(int board[10][10])
     placeShip(board, 1, 1, x, y, 1);
 }
 
+
 void AIPlaceShips(int board[10][10])
 {
     srand(time(NULL));
@@ -582,6 +588,7 @@ void AIPlaceShips(int board[10][10])
     AIjednomasztowiec(board);
 }
 
+
 void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
 {
     system("cls");
@@ -589,26 +596,26 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
     printf("\nPodaj koordynaty strzalu:\n");
     int x=0, y=0;
     scanf("%d %d", &x, &y);
-    while(x<1 || x>10 || y<1 || x>10 || shots[y-1][x-1]!=0) //jeżeli podane przez użytkownika współrzędne są poza tablicą lub nie są wodą to program wyświetla komunikat o błędzie
+    while(x<1 || x>10 || y<1 || x>10 || shots[y-1][x-1]!=0)
     {
-
+        clearTwoLines();
         printf("Bledne dane\n");
         scanf("%d %d", &x, &y);
     }
-    if(ships[y-1][x-1]==1) //jeżeli trafiony
+    if(ships[y-1][x-1]==1)
     {
-        shots[y-1][x-1] = 2; //zarówno w tablicy ze statkami komputera jak i strzałami użytkownika jest to zaznaczane
+        shots[y-1][x-1] = 2;
         ships[y-1][x-1] = 2;
         int size=1;
         int hits=1;
         int i=1;
 
-        while(x+i<11) //dopóki nie wyjdziemy poza prawą krawędź tablicysprawdzamy ze wszystkich stron gdzie sa elementy statku, liczymy ile ich jest i ile z nich jest trafionych, w tym whilu w prawo
+        while(x+i<11)
         {
-            if(ships[y-1][x+i-1]==1 || ships[y-1][x+i-1]==2) //jeżeli na prawo od trafienia jest kolejny fragment statku trafiony lub nie to zwiekszamy size
+            if(ships[y-1][x+i-1]==1 || ships[y-1][x+i-1]==2)
             {
                 size++;
-                if(ships[y-1][x+i-1]==2) //jeżeli trafiony to zwiększamy hits
+                if(ships[y-1][x+i-1]==2)
                     hits++;
             }
             else
@@ -616,7 +623,7 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
             i++;
         }
         i=1;
-        while(x-i>0) //analogicznie jak wyżej tylko na lewo
+        while(x-i>0)
         {
             if(ships[y-1][x-i-1]==1 || ships[y-1][x-i-1]==2)
             {
@@ -629,7 +636,7 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
             i++;
         }
         i=1;
-        while(y+i<11) //analogicznie jak wyżej tylko w dół
+        while(y+i<11)
         {
             if(ships[y+i-1][x-1]==1 || ships[y+i-1][x-1]==2)
             {
@@ -642,7 +649,7 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
             i++;
         }
         i=1;
-        while(y-i>0) //analogicznie jak wyżej tylko w górę
+        while(y-i>0)
         {
             if(ships[y-i-1][x-1]==1 || ships[y-i-1][x-1]==2)
             {
@@ -655,10 +662,10 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
             i++;
         }
 
-        if(size == hits) //jeżeli rozmiar statku jest równy liczbie elementów trafionych
+        if(size == hits)
         {
-            pCounter++; //licznik zatopionych statków zostaje zwiększony
-            int orientation=0; //domyślna orientacja to 0 czyli pionowa
+            pCounter++;
+            int orientation=0;
             while (x-1>0 && ships[y-1][x-2]==2)
             {
                 x--;
@@ -672,11 +679,11 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
             {
                 orientation = 1;
             }
-            placeShip(ships, size, orientation, x, y, 3); //funkcja placeShip aby zapisać, że statek jest zatopiony na tablicy ze statkami komputera i strzałami użytkownika
+            placeShip(ships, size, orientation, x, y, 3);
             placeShip(shots, size, orientation, x, y, 3);
         }
     }
-    else if(ships[y-1][x-1]==0 || ships[y-1][x-1]==-2) //jeżeli pudło to zapisujemy to na tablicy ze strzałami użytkownika jako -1
+    else if(ships[y-1][x-1]==0 || ships[y-1][x-1]==-2)
         shots[y-1][x-1] = -1;
 
 }
@@ -684,27 +691,27 @@ void pShooting(int ships[10][10], int shots[10][10], int toDisplay[10][10])
 void kShooting(int ships[10][10], int shots[10][10])
 {
     int x=0,y=0;
-    if(firstX) //3
+    if(firstX)
     {
         if(lastX)
         {
-            if(lastX<firstX) //lasty większe firsty mniejsze
+            if(lastX<firstX)
             {
                 int tmp = lastX;
                 lastX = firstX;
                 firstX = tmp;
             }
-            if(lastY<firstY) //last nizej first wyzej
+            if(lastY<firstY)
             {
                 int tmp = lastY;
                 lastY = firstY;
                 firstY = tmp;
             }
-            if(firstX == lastX) //jak x rowne to pionowo
+            if(firstX == lastX)
             {
                 if(shotNumber == 0)
                 {
-                    if(firstY == 1 || shots[firstY-2][firstX-1]==-2)
+                    if(firstY == 1 || shots[firstY-2][firstX-1]==1)
                         shotNumber++;
                     else
                     {
@@ -723,11 +730,11 @@ void kShooting(int ships[10][10], int shots[10][10])
                         lastY = lastY + 1;
                 }
             }
-            else if(firstY == lastY) //jak y równe to poziomo
+            else if(firstY == lastY)
             {
                 if(shotNumber == 0)
                 {
-                    if(firstX == 1 || shots[firstY-1][firstX-2]==-2)
+                    if(firstX == 1 || shots[firstY-1][firstX-2]==1)
                         shotNumber++;
                     else
                     {
@@ -747,7 +754,7 @@ void kShooting(int ships[10][10], int shots[10][10])
                 }
             }
         }
-        else //2
+        else
         {
             if((firstY==1 || shots[firstY-2][firstX-1]==-2) && shotNumber==0)
                 shotNumber++;
@@ -777,7 +784,7 @@ void kShooting(int ships[10][10], int shots[10][10])
         }
 
     }
-    else //1
+    else
     {
         x = 1 + rand() % 10;
         y = 1 + rand() % 10;
@@ -787,15 +794,15 @@ void kShooting(int ships[10][10], int shots[10][10])
             y = 1 + rand() % 10;
         }
     }
-    if(ships[y-1][x-1]==1) //po trafieniu
+    if(ships[y-1][x-1]==1)
     {
-        if(firstX && !lastX) //jeżeli jest ustawiony x z pierwszego trafienia i x z ostatniego trafienie, firstX wspolrzedna x pierwszego trafienia, lastX wspolrzedna x ostatniego trafienia
+        if(firstX && !lastX)
         {
-            lastX = x; //
+            lastX = x;
             lastY = y;
             shotNumber = 0;
         }
-        else if(!firstX) //jeżeli firstX nie istnieje
+        else if(!firstX)
         {
             firstX = x;
             firstY = y;
@@ -918,7 +925,6 @@ int main()
             kShots[i][j] = 0;
     printf("\n WITAJ W GRZE W STATKI, TWOIM ZADANIEM JEST ZATOPIENIE OKRETOW KOMPUTERA. JEZELI ZATOPISZ\n RAZEM 10 STATKOW, WYGRYWASZ. Z DRUGIEJ STRONY, JEZELI KOMPUTER SZYBCIEJ ZATOPI TWOJE 10\n STATKOW, TO PRZEGRYWASZ. \n POWODZENIA! \n\n WCISNIJ 0, ABY KONTYNUOWAC: ");
     scanf("%c", &start);
-    system("cls");
     switch(start)
       {
         case '0':
@@ -955,3 +961,4 @@ int main()
       }
 
 }
+
